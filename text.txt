@@ -1,0 +1,22 @@
+*Field research*
+🗓️ $date, ($amount$ of XXX Stops scanned)
+
+You can write whatever you want in here. Formatting is Telegram Markdown.
+
+Example:
+🐉
+*Aerodactyl:*
+$142$
+*Chansey:*
+$113$
+*Dratini:*
+$147$
+*Lapras:*
+$131$
+*Larvitar:*
+$246$
+*Spinda:*
+$327$
+
+$stardust$
+$rarecandy$

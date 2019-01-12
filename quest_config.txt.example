@@ -1,0 +1,37 @@
+#TOKEN
+yourtelegramTokenHere
+
+#CHATID
+yourTelegramChatIDHere
+
+#MAPURL
+https://map.yourdomainhere.com
+
+#MADMINURL
+http://localhost:5001
+
+//change this to change the weekdate language. Be careful, Windows has other locales than Linux. See https://docs.microsoft.com/en-us/cpp/c-runtime-library/language-strings?view=vs-2017
+#LOCALE
+en-US
+
+//Pokedex numbers of questrewards
+#POKEMON
+102
+113
+131
+142
+147
+246
+327
+345
+
+//amount of stardust to be listed
+#STARDUST
+1000
+1500
+
+/amount of rare candy to be listed
+#RARECANDY
+3
+2
+1
