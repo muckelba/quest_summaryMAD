@@ -29,8 +29,8 @@ localeSetting = readConfig('LOCALE')
 pokemonIds = readConfig('POKEMON')
 rarecandy = readConfig('RARECANDY')
 stardust = readConfig('STARDUST')
-
-
+user = readConfig('USER')
+passw = readConfig('PASS')
 
 text_file = open('text.txt', 'r', encoding='utf-8')
 text = text_file.read()
@@ -46,7 +46,11 @@ for k in stardust:
 for k in pokemonIds:
     pokeList.append(False)
 
-json_input = requests.get(madminurl[0] + '/get_quests')
+if user != "":
+    json_input = requests.get(madminurl[0] + '/get_quests', auth=(user[0], passw[0]))
+else:
+    json_input = requests.get(madminurl[0] + '/get_quests')
+
 data = json_input.json()
 
 link = ''
