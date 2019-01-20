@@ -58,15 +58,15 @@ for d in data:
     if d['quest_reward_type'] == "Item":
         if d['item_type'] == "Rare Candy":
             if str(d['item_amount']) in rarecandy:
-                link = '[' + d['name'] + '](' + mapurl[0] + '/?lat=' + str(d['latitude']) + str('%26lon=') + str(d['longitude']) + '%26zoom=16)\n'
+                link = '<a href=%22' + mapurl[0] + '/?lat=' + str(d['latitude']) + str('%26lon=') + str(d['longitude']) + '%26zoom=16%22>' + d['name'] + '</a>\n'
                 candyList[rarecandy.index(d['item_amount'])].append(link)
     elif d['quest_reward_type'] == 'Stardust':
         if str(d['item_amount']) in stardust:
-            link = '[' + d['name'] + '](' + mapurl[0] + '/?lat=' + str(d['latitude']) + str('%26lon=') + str(d['longitude']) + '%26zoom=16)\n'
+            link = '<a href=%22' + mapurl[0] + '/?lat=' + str(d['latitude']) + str('%26lon=') + str(d['longitude']) + '%26zoom=16%22>' + d['name'] + '</a>\n'
             starList[stardust.index(d['item_amount'])].append(link)
     elif d['quest_reward_type'] == 'Pokemon':
         if str(d['pokemon_id']) in pokemonIds:
-            link = '[' + d['name'] + '](' + mapurl[0] + '/?lat=' + str(d['latitude']) + str('%26lon=') + str(d['longitude']) + '%26zoom=16)\n' + '$' + d['pokemon_id'] + '$'
+            link = '<a href=%22' + mapurl[0] + '/?lat=' + str(d['latitude']) + str('%26lon=') + str(d['longitude']) + '%26zoom=16%22>' + d['name'] + '</a>\n' + '$' + d['pokemon_id'] + '$'
             text = text.replace('$' + d['pokemon_id'] + '$', link)
             pokeList[pokemonIds.index(d['pokemon_id'])] = True
 
@@ -76,13 +76,13 @@ candystring = ''
 for i in range(0, len(stardust)):
     if len(starList[i]) == 0:
         continue
-    starstring += '\n🌟 ' + stardust[i] + ' *Stardust:*\n'
+    starstring += '\n🌟 ' + stardust[i] + ' <b>Stardust:</b>\n'
     for k in starList[i]:
         starstring += k
 for i in range(0, len(rarecandy)):
     if len(candyList[i]) == 0:
         continue
-    candystring += '\n🍬 ' + rarecandy[i] + ' *Rare Candies:*\n'
+    candystring += '\n🍬 ' + rarecandy[i] + ' <b>Rare Candies:</b>\n'
     for k in candyList[i]:
         candystring += k
 for i in range(0, len(pokemonIds)):
@@ -90,17 +90,19 @@ for i in range(0, len(pokemonIds)):
     if pokeList[i]:
         text = text.replace('$' + pokemonIds[i] + '$', '')
         continue
-    text = text.replace('$' + pokemonIds[i] + '$', '_Was not found today._\n')
+    text = text.replace('$' + pokemonIds[i] + '$', '<i>Was not found today.</i>\n')
 
 text = text.replace('$rarecandy$', candystring)
 text = text.replace('$stardust$', starstring)
 text = text.replace('$amount$', str(len(data)))
 locale.setlocale(locale.LC_TIME, localeSetting[0])
 text = text.replace('$date', time.strftime("%A, the %e.%m.%Y"))
+text = text.replace('&', '%26amp;')
+
 
 def bot_sendtext(bot_message):
     ### Send text message
-    send_text = 'https://api.telegram.org/bot' + token[0] + '/sendMessage?chat_id=' + chat_id[0] + '&parse_mode=Markdown&text=' + bot_message
+    send_text = 'https://api.telegram.org/bot' + token[0] + '/sendMessage?chat_id=' + chat_id[0] + '&parse_mode=html&text=' + bot_message
     requests.get(send_text)
 
 bot_sendtext(text)
