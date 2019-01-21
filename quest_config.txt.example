@@ -12,10 +12,10 @@ http://localhost:5000
 
 //If you use the basic auth from MADmin, fill this. Leave it empty if you dont use it, dont fill anything in
 #USER
-Hilde
+USERNAME
 
 #PASS
-Glurak
+PASSWORD
 
 //change this to change the weekdate language. Be careful, Windows has other locales than Linux. See https://docs.microsoft.com/en-us/cpp/c-runtime-library/language-strings?view=vs-2017
 #LOCALE
