@@ -1,0 +1,22 @@
+<b>Field research</b>
+🗓️ $date, ($amount$ of XXX Stops scanned)
+
+<i>You can write whatever you want in here. Formatting is telegram HTML (see https://core.telegram.org/bots/api#html-style).</i>
+
+Example:
+🐉
+<b>Aerodactyl:</b>
+$142$
+<b>Chansey:</b>
+$113$
+<b>Dratini:</b>
+$147$
+<b>Lapras:</b>
+$131$
+<b>Larvitar:</b>
+$246$
+<b>Spinda:</b>
+$327$
+
+$stardust$
+$rarecandy$

@@ -2,35 +2,24 @@ import json
 import requests
 import time
 import locale
+import configparser
 
-def readConfig(type):
-    arr = []
-    parse = False
-    with open('quest_config.txt') as f:
-        arr = f.readlines()
-    arr = [x.strip() for x in arr]
-    resp = []
-    for x in arr:
-        if '#' in x:
-            if type in x:
-                parse = True
-                continue
-            else:
-                parse = False
-        if parse and x != '':
-            resp.append(x)
-    return resp
+config = configparser.ConfigParser()
+config.read('config.ini')
 
-token = readConfig('TOKEN')
-chat_id = readConfig('CHATID')
-mapurl = readConfig('MAPURL')
-madminurl = readConfig('MADMINURL')
-localeSetting = readConfig('LOCALE')
-pokemonIds = readConfig('POKEMON')
-rarecandy = readConfig('RARECANDY')
-stardust = readConfig('STARDUST')
-user = readConfig('USER')
-passw = readConfig('PASS')
+token = config.get('CONFIG', 'TOKEN')
+chat_id = config.get('CONFIG', 'CHATID')
+mapurl = config.get('CONFIG', 'MAPURL')
+madminurl = config.get('CONFIG', 'MADMINURL')
+localeSetting = config.get('CONFIG', 'LOCALE')
+pokemonIds = config.get('CONFIG', 'POKEMON')
+rarecandy = config.get('CONFIG', 'RARECANDY')
+stardust = config.get('CONFIG', 'STARDUST')
+user = config.get('CONFIG', 'USER')
+passw = config.get('CONFIG', 'PASS')
+
+print(token)
+print(pokemonIds)
 
 text_file = open('text.txt', 'r', encoding='utf-8')
 text = text_file.read()
@@ -47,9 +36,9 @@ for k in pokemonIds:
     pokeList.append(False)
 
 if user != "":
-    json_input = requests.get(madminurl[0] + '/get_quests', auth=(user[0], passw[0]))
+    json_input = requests.get(madminurl + '/get_quests', auth=(user, passw))
 else:
-    json_input = requests.get(madminurl[0] + '/get_quests')
+    json_input = requests.get(madminurl + '/get_quests')
 
 data = json_input.json()
 
@@ -58,15 +47,15 @@ for d in data:
     if d['quest_reward_type'] == "Item":
         if d['item_type'] == "Rare Candy":
             if str(d['item_amount']) in rarecandy:
-                link = '<a href=%22' + mapurl[0] + '/?lat=' + str(d['latitude']) + str('%26lon=') + str(d['longitude']) + '%26zoom=16%22>' + d['name'] + '</a>\n'
+                link = '<a href=%22' + mapurl + '/?lat=' + str(d['latitude']) + str('%26lon=') + str(d['longitude']) + '%26zoom=16%22>' + d['name'] + '</a>\n'
                 candyList[rarecandy.index(d['item_amount'])].append(link)
     elif d['quest_reward_type'] == 'Stardust':
         if str(d['item_amount']) in stardust:
-            link = '<a href=%22' + mapurl[0] + '/?lat=' + str(d['latitude']) + str('%26lon=') + str(d['longitude']) + '%26zoom=16%22>' + d['name'] + '</a>\n'
+            link = '<a href=%22' + mapurl + '/?lat=' + str(d['latitude']) + str('%26lon=') + str(d['longitude']) + '%26zoom=16%22>' + d['name'] + '</a>\n'
             starList[stardust.index(d['item_amount'])].append(link)
     elif d['quest_reward_type'] == 'Pokemon':
         if str(d['pokemon_id']) in pokemonIds:
-            link = '<a href=%22' + mapurl[0] + '/?lat=' + str(d['latitude']) + str('%26lon=') + str(d['longitude']) + '%26zoom=16%22>' + d['name'] + '</a>\n' + '$' + d['pokemon_id'] + '$'
+            link = '<a href=%22' + mapurl + '/?lat=' + str(d['latitude']) + str('%26lon=') + str(d['longitude']) + '%26zoom=16%22>' + d['name'] + '</a>\n' + '$' + d['pokemon_id'] + '$'
             text = text.replace('$' + d['pokemon_id'] + '$', link)
             pokeList[pokemonIds.index(d['pokemon_id'])] = True
 
@@ -95,14 +84,14 @@ for i in range(0, len(pokemonIds)):
 text = text.replace('$rarecandy$', candystring)
 text = text.replace('$stardust$', starstring)
 text = text.replace('$amount$', str(len(data)))
-locale.setlocale(locale.LC_TIME, localeSetting[0])
+locale.setlocale(locale.LC_TIME, localeSetting)
 text = text.replace('$date', time.strftime("%A, the %e.%m.%Y"))
 text = text.replace('&', '%26amp;')
 
 
 def bot_sendtext(bot_message):
     ### Send text message
-    send_text = 'https://api.telegram.org/bot' + token[0] + '/sendMessage?chat_id=' + chat_id[0] + '&parse_mode=html&text=' + bot_message
+    send_text = 'https://api.telegram.org/bot' + token + '/sendMessage?chat_id=' + chat_id + '&parse_mode=html&text=' + bot_message
     requests.get(send_text)
 
 bot_sendtext(text)
