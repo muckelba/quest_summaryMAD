@@ -16,10 +16,10 @@ PASS:PASSWORD
 LOCALE: en-US
 
 ##Pokedex numbers of questrewards
-POKEMON: ["102", "113", "131", "142", "147", "246", "327", "345"]
+POKEMON: 102,113,131,142,147,246,327,345
 
 ##amount of stardust to be listed
-STARDUST: ["1000", "1500"]
+STARDUST: 1000,1500
 
 ##amount of rare candy to be listed
-RARECANDY: ["3", "2", "1"]
+RARECANDY: 3,2,1

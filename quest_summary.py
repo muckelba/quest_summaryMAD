@@ -18,8 +18,9 @@ stardust = config.get('CONFIG', 'STARDUST')
 user = config.get('CONFIG', 'USER')
 passw = config.get('CONFIG', 'PASS')
 
-print(token)
-print(pokemonIds)
+pokemonIds = pokemonIds.split(',')
+stardust = stardust.split(',')
+rarecandy = rarecandy.split(',')
 
 text_file = open('text.txt', 'r', encoding='utf-8')
 text = text_file.read()
