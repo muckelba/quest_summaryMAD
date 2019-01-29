@@ -3,6 +3,7 @@ import requests
 import time
 import locale
 import configparser
+import re
 
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -17,6 +18,7 @@ rarecandy = config.get('CONFIG', 'RARECANDY')
 stardust = config.get('CONFIG', 'STARDUST')
 user = config.get('CONFIG', 'USER')
 passw = config.get('CONFIG', 'PASS')
+notfound = config.get('CONFIG', 'NOTFOUND')
 
 pokemonIds = pokemonIds.split(',')
 stardust = stardust.split(',')
@@ -76,17 +78,17 @@ for i in range(0, len(rarecandy)):
     for k in candyList[i]:
         candystring += k
 for i in range(0, len(pokemonIds)):
-
     if pokeList[i]:
         text = text.replace('$' + pokemonIds[i] + '$', '')
         continue
-    text = text.replace('$' + pokemonIds[i] + '$', '<i>Was not found today.</i>\n')
+    if notfound == 'true':
+        text = text.replace('$' + pokemonIds[i] + '$', '<i>Was not found today.</i>\n')
 
 text = text.replace('$rarecandy$', candystring)
 text = text.replace('$stardust$', starstring)
 text = text.replace('$amount$', str(len(data)))
 locale.setlocale(locale.LC_TIME, localeSetting)
-text = text.replace('$date', time.strftime("%A, the %e.%m.%Y"))
+text = text.replace('$date', time.strftime("%A, %e.%m.%Y"))
 text = text.replace('&', '%26amp;')
 
 
