@@ -15,6 +15,9 @@ PASS:PASSWORD
 ##change this to change the weekdate language. Be careful, Windows has other locales than Linux. See https://docs.microsoft.com/en-us/cpp/c-runtime-library/language-strings?view=vs-2017
 LOCALE: en-US
 
+##Displays a message when no quest of a pokemon is found. Setting this to false disables it.
+NOTFOUND: true
+
 ##Pokedex numbers of questrewards
 POKEMON: 102,113,131,142,147,246,327,345
 

@@ -78,10 +78,14 @@ for i in range(0, len(rarecandy)):
     for k in candyList[i]:
         candystring += k
 for i in range(0, len(pokemonIds)):
+    
     if pokeList[i]:
         text = text.replace('$' + pokemonIds[i] + '$', '')
         continue
-    if notfound == 'true':
+    if notfound == 'false':
+        match = re.search(r"((.*\n){1})\$" + pokemonIds[i] +r"\$", text)
+        text = text.replace(str(match[0]), '')
+    else:
         text = text.replace('$' + pokemonIds[i] + '$', '<i>Was not found today.</i>\n')
 
 text = text.replace('$rarecandy$', candystring)
