@@ -9,6 +9,7 @@ config.read('config.ini')
 
 token = config.get('CONFIG', 'TOKEN')
 chat_id = config.get('CONFIG', 'CHATID')
+mapmode = config.get('CONFIG', 'MAPMODE')
 mapurl = config.get('CONFIG', 'MAPURL')
 madminurl = config.get('CONFIG', 'MADMINURL')
 localeSetting = config.get('CONFIG', 'LOCALE')
@@ -43,22 +44,46 @@ else:
 
 data = json_input.json()
 
-link = ''
-for d in data:
-    if d['quest_reward_type'] == "Item":
-        if d['item_type'] == "Rare Candy":
-            if str(d['item_amount']) in rarecandy:
-                link = '<a href=%22' + mapurl + '/?lat=' + str(d['latitude']) + str('%26lon=') + str(d['longitude']) + '%26zoom=16%22>' + d['name'] + '</a>\n'
-                candyList[rarecandy.index(d['item_amount'])].append(link)
-    elif d['quest_reward_type'] == 'Stardust':
-        if str(d['item_amount']) in stardust:
-            link = '<a href=%22' + mapurl + '/?lat=' + str(d['latitude']) + str('%26lon=') + str(d['longitude']) + '%26zoom=16%22>' + d['name'] + '</a>\n'
-            starList[stardust.index(d['item_amount'])].append(link)
-    elif d['quest_reward_type'] == 'Pokemon':
-        if str(d['pokemon_id']) in pokemonIds:
-            link = '<a href=%22' + mapurl + '/?lat=' + str(d['latitude']) + str('%26lon=') + str(d['longitude']) + '%26zoom=16%22>' + d['name'] + '</a>\n' + '$' + d['pokemon_id'] + '$'
-            text = text.replace('$' + d['pokemon_id'] + '$', link)
-            pokeList[pokemonIds.index(d['pokemon_id'])] = True
+if mapmode == "CUSTOM":
+    link = ''
+    for d in data:
+        if d['quest_reward_type'] == "Item":
+            if d['item_type'] == "Rare Candy":
+                if str(d['item_amount']) in rarecandy:
+                    link = '<a href=%22' + mapurl + '/?lat=' + str(d['latitude']) + str('%26lon=') + str(
+                        d['longitude']) + '%26zoom=16%22>' + d['name'] + '</a>\n'
+                    candyList[rarecandy.index(d['item_amount'])].append(link)
+        elif d['quest_reward_type'] == 'Stardust':
+            if str(d['item_amount']) in stardust:
+                link = '<a href=%22' + mapurl + '/?lat=' + str(d['latitude']) + str('%26lon=') + str(
+                    d['longitude']) + '%26zoom=16%22>' + d['name'] + '</a>\n'
+                starList[stardust.index(d['item_amount'])].append(link)
+        elif d['quest_reward_type'] == 'Pokemon':
+            if str(d['pokemon_id']) in pokemonIds:
+                link = '<a href=%22' + mapurl + '/?lat=' + str(d['latitude']) + str('%26lon=') + str(
+                    d['longitude']) + '%26zoom=16%22>' + d['name'] + '</a>\n' + '$' + d['pokemon_id'] + '$'
+                text = text.replace('$' + d['pokemon_id'] + '$', link)
+                pokeList[pokemonIds.index(d['pokemon_id'])] = True
+
+elif mapmode == "GMAPS":
+    link = ''
+    for d in data:
+        if d['quest_reward_type'] == "Item":
+            if d['item_type'] == "Rare Candy":
+                if str(d['item_amount']) in rarecandy:
+                    link = '<a href=%22http://www.google.com/maps/place/' + str(d['latitude']) + str(',') + str(
+                        d['longitude']) + '%22>' + d['name'] + '</a>\n'
+                    candyList[rarecandy.index(d['item_amount'])].append(link)
+        elif d['quest_reward_type'] == 'Stardust':
+            if str(d['item_amount']) in stardust:
+                link = '<a href=%22http://www.google.com/maps/place/' + str(d['latitude']) + str(',') + str(
+                    d['longitude']) + '%22>' + d['name'] + '</a>\n'
+                starList[stardust.index(d['item_amount'])].append(link)
+        elif d['quest_reward_type'] == 'Pokemon':
+            if str(d['pokemon_id']) in pokemonIds:
+                link = '<a href=%22http://www.google.com/maps/place/' + str(d['latitude']) + str(',') + str(d['longitude']) + '%22>' + d['name'] + '</a>\n' + '$' + d['pokemon_id'] + '$'
+                text = text.replace('$' + d['pokemon_id'] + '$', link)
+                pokeList[pokemonIds.index(d['pokemon_id'])] = True
 
 starstring = ''
 candystring = ''
