@@ -3,7 +3,11 @@ TOKEN: yourtelegramTokenHere
 
 CHATID: yourTelegramChatIDHere
 
-MAPURL: https://map.yourdomainhere.com
+##Where you want to show your Pokéstoplocation? CUSTOM = on your RM or Monocle | GMAPS = show on Google Maps
+MAPMODE: GMAPS
+
+##Leave MAPURL empty if you use GMAPS
+MAPURL:
 
 MADMINURL: http://localhost:5000
 
